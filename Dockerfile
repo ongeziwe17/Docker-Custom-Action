@@ -1,7 +1,8 @@
 FROM alpine:3.10
 
 # install required packages
-RUN apt update && apt add --no-cache curl jq
+RUN apk update && \
+    apk add --no-cache curl jq
 
 # copy entrypoint.sh scrip
 COPY entrypoint.sh /entrypoint.sh
@@ -10,4 +11,5 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod -x /entrypoint.sh
 
 # dockerfile entrypoint
+
 ENTRYPOINT ["/entrypoint.sh"]
