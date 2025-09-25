@@ -1,13 +1,19 @@
-FROM alpine:3.10
+FROM ubuntu:24.04
+
+# avoiding user interaction during package install
+ENV DEBIAN_FRONTEND=noninteractive
 
 # install required packages
-RUN apt update && apt add --no-cache curl jq
+RUN apt-get update && \
+    apt-get install -y curl jq && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# copy entrypoint.sh scrip
+# copy the entrypoint script
 COPY entrypoint.sh /entrypoint.sh
 
-# make file executable
-RUN chmod -x /entrypoint.sh
+# make it executable
+RUN chmod +x /entrypoint.sh
 
-# dockerfile entrypoint
+# set the entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
